@@ -3,6 +3,7 @@
 Výchozí vzor
 Výrazy v “Turingův  jazyk” vypadají takto: 
 
+```
 Start startStav(“start”)
 Abeceda abceda(‘a’,’b’)
 Delta prechodoveFunkce {
@@ -20,3 +21,4 @@ stav2 {
 Automat turing = (startStav, prechodoveFunkce, [stav2, stav3]) //Stav2 a stav3 jsou konečné stavy kdy slovo je akceptováno
 
 turing(‘aabbaa’) // Vrati informaci jestli slovo je přijato TS.
+```
