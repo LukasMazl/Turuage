@@ -13,9 +13,9 @@ pointer - Ukazuje aktuální pozici na pásce (#) - konkrétní symbol pro point
 
 Turing(accept, reject, vstup, program) - Vrací boolean jestli je slovo přijato nebo zamítnuto (true nebo false)
 
--> 	- prechod
-= 	- prirazeni
-//  	- komentar
+- -> 	- prechod
+- = 	- prirazeni
+- //  	- komentar
 
 ## Příklad jazyka
 
