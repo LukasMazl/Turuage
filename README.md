@@ -34,5 +34,5 @@ Stav q1 = {
 	‘b’ -> ‘b’, R, q1;
 }
 
-Turing(accept, reject, vstup, (q0, q1));
+Turing(accept, reject, vstup, (q0, q1)); //Vraci true nebo false
 ```
