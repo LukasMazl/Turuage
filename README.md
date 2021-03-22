@@ -36,6 +36,7 @@ Stav q1 = {
 Turing(accept, reject, vstup, [q0, q1]); //Vraci true nebo false
 ```
 ## Gramatika
+```
 <input_string> ::= "\"" <alfabet>+ "\""
 <alfabet> ::= [a-z] | [A-Z] | [0-9]
 <end_statement> ::= ";"
@@ -68,3 +69,4 @@ Turing(accept, reject, vstup, [q0, q1]); //Vraci true nebo false
 <state_statement> ::= <state_type> <space> <state_name> <space>* "=" <space>* <transition_rules>
 <state_array> ::= "[" <state_name> "]" | "[" <space>* <state_name> (<divider>  <state_name>)* "]"
 <turing_function> ::= <turing_type> "(" <accept_name> <divider> <reject_name> <divider> <paska_name> <divider> <state_array> ")" <end_statement> <comment>*
+```
