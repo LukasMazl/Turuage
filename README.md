@@ -35,3 +35,4 @@ Stav q1 = {
 
 Turing(accept, reject, vstup, (q0, q1)); //Vraci true nebo false
 ```
+## Gramatika
