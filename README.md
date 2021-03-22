@@ -24,13 +24,13 @@ Accept accept = [q0, q3];
 Reject reject = [q1, q2];
 
 Stav q0 = {
-	‘a’ -> ‘a’, L, q0;
-	‘b’ -> ‘b’, R, q1;
+	‘a’ -> ‘a’, L, q0
+	‘b’ -> ‘b’, R, q1
 }
 
 Stav q1 = {
-	‘a’ -> ‘a’, L, q0;
-	‘b’ -> ‘b’, R, q1;
+	‘a’ -> ‘a’, L, q0
+	‘b’ -> ‘b’, R, q1
 }
 
 Turing(accept, reject, vstup, (q0, q1)); //Vraci true nebo false
