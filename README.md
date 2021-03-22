@@ -1,13 +1,12 @@
 # Turing language
 ## Definice typů
 
-Boolen hodnota - Využívá funkce Turing, která vrací True, pokud je slovo acceptováno, False pokud je zamítnuto. Případ zacyklení není řešen. Pokud dojde k přístupu mimo pásku, tak je vrácen false
+Boolen hodnota - Využívá funkce Turing, která vrací True, pokud je slovo acceptováno, False pokud je zamítnuto. Případ zacyklení není řešen.
 
 string/char array - Vstupní retezec
+
 byte - velikost pásky
 byte[] - pro simulaci pásky
-
-pointer - Ukazuje aktuální pozici na pásce (#) - konkrétní symbol pro pointer ?
 
 ## Definice operací
 
@@ -20,9 +19,9 @@ Turing(accept, reject, vstup, program) - Vrací boolean jestli je slovo přijato
 ## Příklad jazyka
 
 ```
-Paska vstup = “10101011”|50; // |50 definuje velikost pástky
-Accept accept = q0;
-Reject reject = q1;
+Paska vstup = “10101011”;
+Accept accept = [q0, q3];
+Reject reject = [q1, q2];
 
 Stav q0 = {
 	‘a’ -> ‘a’, L, q0;
