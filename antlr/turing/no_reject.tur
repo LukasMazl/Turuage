@@ -1,0 +1,20 @@
+Tape tape = "10"
+Accept acp = [q0, q5]
+
+State q0 = {
+    '1' -> '1', L, q0|
+    '0' -> '0', L, q1
+}
+
+State q1 = {
+    '1' -> '1', R, q0|
+    '0' -> '0', R, q2
+}
+
+State q2 = {
+    '1' -> '1', R, q2|
+    '0' -> '0', L, q0
+}
+
+Turing(acp, tape, [q0, q1, q2])
+Turing(acp, tape, [q0, q1, q2]) //This is working example
