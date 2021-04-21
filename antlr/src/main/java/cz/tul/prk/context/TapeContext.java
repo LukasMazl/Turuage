@@ -1,6 +1,7 @@
 package cz.tul.prk.context;
 
 public class TapeContext extends AbstractContext {
+
     private String ident;
     private String value;
 

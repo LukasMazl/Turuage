@@ -10,6 +10,7 @@ public class ChainValidatorBuilder {
     static {
         VALIDATORS = new ArrayList<>();
         VALIDATORS.add(new StateValidator());
+        VALIDATORS.add(new IdentificatorValidator());
     }
 
     public static List<Validator> getValidators() {

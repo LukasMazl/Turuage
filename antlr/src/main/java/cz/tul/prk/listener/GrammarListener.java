@@ -59,48 +59,59 @@ public class GrammarListener extends TuringBaseListener {
         String identif = ctx.Identifier().getText();
 
         TuringParser.State_arrayContext state_arrayContext = ctx.state_array();
-        for (TuringParser.StateContext stateContext : state_arrayContext.state()) {
-            String tapeMove = stateContext.tape_move().getText();
-            String readingValue = stateContext.TapeValue().get(0).getText().replace("'", "");
-            String writingValue = stateContext.TapeValue().get(1).getText().replace("'", "");
-            String newState = stateContext.Identifier().getText();
-            TuringMove turingMove = TuringMove.getValue((char) tapeMove.getBytes()[0]);
+        if (state_arrayContext.getText().length() != 2) {
+            for (TuringParser.StateContext stateContext : state_arrayContext.state()) {
+                String tapeMove = stateContext.tape_move().getText();
+                String readingValue = stateContext.tape_value().get(0).getText().replace("'", "");
+                String writingValue = stateContext.tape_value().get(1).getText().replace("'", "");
+                String newState = stateContext.Identifier().getText();
+                TuringMove turingMove = TuringMove.getValue((char) tapeMove.getBytes()[0]);
 
-            StateContext stateContextValue = new StateContext();
-            stateContextValue.setParserRuleContext(ctx);
-            stateContextValue.setTuringMove(turingMove);
-            stateContextValue.setIdentificator((char) readingValue.getBytes()[0]);
-            stateContextValue.setWriteValue((char) writingValue.getBytes()[0]);
-            stateContextValue.setNextState(newState);
+                StateContext stateContextValue = new StateContext();
+                stateContextValue.setParserRuleContext(ctx);
+                stateContextValue.setTuringMove(turingMove);
+                stateContextValue.setIdentificator((char) readingValue.getBytes()[0]);
+                stateContextValue.setWriteValue((char) writingValue.getBytes()[0]);
+                stateContextValue.setNextState(newState);
 
-            grammerServise.addState(identif, stateContextValue);
+                grammerServise.addState(identif, stateContextValue);
+            }
+        } else {
+            grammerServise.addState(identif,null);
         }
-
 
     }
 
     @Override
     public void enterTuring_function(TuringParser.Turing_functionContext ctx) {
         String accept = ctx.Identifier().get(0).getText();
+        String startState = null;
         String reject = null;
         String input;
-        if(ctx.Identifier().size() > 2) {
+        if(ctx.Identifier().size() > 3) {
             reject = ctx.Identifier().get(1).getText();
             input = ctx.Identifier().get(2).getText();
+            startState = ctx.Identifier().get(3).getText();
         } else {
             input = ctx.Identifier().get(1).getText();
+            startState = ctx.Identifier().get(2).getText();
         }
         Set<String> states = new HashSet<>();
 
-        TuringParser.ArrayContext arrayContext = ctx.array();
-        for (TerminalNode node : arrayContext.Identifier()) {
-            states.add(node.getText());
+        if(ctx.ALL_STATES() == null) {
+            TuringParser.ArrayContext arrayContext = ctx.array();
+            for (TerminalNode node : arrayContext.Identifier()) {
+                states.add(node.getText());
+            }
+        } else {
+            states = getProgramContext().getStateContext().keySet();
         }
 
         TuringContext turingContext = new TuringContext();
         turingContext.setParserRuleContext(ctx);
         turingContext.setAcceptIdent(accept);
         turingContext.setRejectIdent(reject);
+        turingContext.setStartState(startState);
         turingContext.setInputIdent(input);
         turingContext.setStatesIdent(states);
 

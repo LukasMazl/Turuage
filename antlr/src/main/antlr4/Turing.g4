@@ -2,7 +2,7 @@ grammar Turing;
 
 
 root_rule
-    : tape_statement accept_statement (reject_statement)? state_statement* (turing_function)*
+    : tape_statement+ accept_statement+ (reject_statement)* state_statement* (turing_function)*
     ;
 
 tape_statement
@@ -26,18 +26,25 @@ state_statement
     ;
 
 state_array
-    : '{' state ('|' state)* '}';
+    : '{' state ('|' state)* '}'
+    | '{' '}'
+    ;
+
 
 tape_move
     :R
     |L
     ;
 
+tape_value
+    :TapeValue
+    |EMPTY_VALUE;
+
 state
-    : TapeValue  transition_operator  TapeValue COMMA tape_move COMMA Identifier;
+    : tape_value  transition_operator  tape_value COMMA tape_move COMMA Identifier;
 
 turing_function
-    : TURING_FUNCTION '(' Identifier COMMA Identifier COMMA (Identifier COMMA)? array ')';
+    : TURING_FUNCTION '(' Identifier COMMA Identifier COMMA Identifier COMMA (Identifier COMMA)? (array|ALL_STATES) ')';
 
 // Key words
 L : 'L';
@@ -51,10 +58,11 @@ OPEN_BRACKET : '[';
 CLOSE_BRACKET : ']';
 COMMA : ',';
 TURING_FUNCTION : 'Turing';
-
+EMPTY_VALUE : '\' \'';
+ALL_STATES : '*';
 
 STRING
-	:	'"' TurringLetter* '"'
+	:	'"' (TurringLetter|' ')* '"'
 	;
 
 

@@ -60,10 +60,13 @@ public class GrammarService {
             stateContextMap.put(identificator, stateContextsList);
         }
 
-        stateContextsList.add(stateContext);
+        if(stateContext != null) {
+            stateContextsList.add(stateContext);
+        }
     }
 
     public void addTuringFunction(TuringContext turingContext) {
         programContext.getTuringContextList().add(turingContext);
     }
+
 }

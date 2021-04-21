@@ -87,6 +87,16 @@ public interface TuringListener extends ParseTreeListener {
 	 */
 	void exitTape_move(TuringParser.Tape_moveContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TuringParser#tape_value}.
+	 * @param ctx the parse tree
+	 */
+	void enterTape_value(TuringParser.Tape_valueContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TuringParser#tape_value}.
+	 * @param ctx the parse tree
+	 */
+	void exitTape_value(TuringParser.Tape_valueContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TuringParser#state}.
 	 * @param ctx the parse tree
 	 */

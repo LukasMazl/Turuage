@@ -111,6 +111,18 @@ public class TuringBaseListener implements TuringListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterTape_value(TuringParser.Tape_valueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTape_value(TuringParser.Tape_valueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterState(TuringParser.StateContext ctx) { }
 	/**
 	 * {@inheritDoc}

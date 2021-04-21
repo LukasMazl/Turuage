@@ -7,6 +7,7 @@ public class TuringContext extends AbstractContext {
     private String acceptIdent;
     private String rejectIdent;
     private String inputIdent;
+    private String startState;
     private Set<String> statesIdent;
 
     public String getAcceptIdent() {
@@ -33,6 +34,14 @@ public class TuringContext extends AbstractContext {
         this.inputIdent = inputIdent;
     }
 
+    public String getStartState() {
+        return startState;
+    }
+
+    public void setStartState(String startState) {
+        this.startState = startState;
+    }
+
     public Set<String> getStatesIdent() {
         return statesIdent;
     }
@@ -43,10 +52,11 @@ public class TuringContext extends AbstractContext {
 
     @Override
     public String toString() {
-        return  getClass().getSimpleName() + "{" +
+        return getClass().getSimpleName() + "{" +
                 "acceptIdent='" + acceptIdent + '\'' +
                 ", rejectIdent='" + rejectIdent + '\'' +
                 ", inputIdent='" + inputIdent + '\'' +
+                ", startState='" + startState + '\'' +
                 ", statesIdent=" + statesIdent +
                 '}';
     }

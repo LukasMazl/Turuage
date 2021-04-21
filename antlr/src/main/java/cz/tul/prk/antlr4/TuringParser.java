@@ -1,15 +1,12 @@
 package cz.tul.prk.antlr4;// Generated from Turing.g4 by ANTLR 4.7.1
-
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.atn.ATNDeserializer;
-import org.antlr.v4.runtime.atn.ParserATNSimulator;
-import org.antlr.v4.runtime.atn.PredictionContextCache;
+import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
-import org.antlr.v4.runtime.tree.ParseTreeListener;
-import org.antlr.v4.runtime.tree.TerminalNode;
-
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.*;
+import org.antlr.v4.runtime.tree.*;
 import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class TuringParser extends Parser {
@@ -21,27 +18,29 @@ public class TuringParser extends Parser {
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, L=7, R=8, TAPE=9, ACCEPT=10,
 		REJECT=11, STATE=12, ASSIGN=13, OPEN_BRACKET=14, CLOSE_BRACKET=15, COMMA=16,
-		TURING_FUNCTION=17, STRING=18, TapeValue=19, Identifier=20, COMMENT=21,
-		LINE_COMMENT=22, WS=23;
+		TURING_FUNCTION=17, EMPTY_VALUE=18, ALL_STATES=19, STRING=20, TapeValue=21,
+		Identifier=22, COMMENT=23, LINE_COMMENT=24, WS=25;
 	public static final int
 		RULE_root_rule = 0, RULE_tape_statement = 1, RULE_accept_statement = 2,
 		RULE_reject_statement = 3, RULE_array = 4, RULE_state_statement = 5, RULE_state_array = 6,
-		RULE_tape_move = 7, RULE_state = 8, RULE_turing_function = 9, RULE_transition_operator = 10;
+		RULE_tape_move = 7, RULE_tape_value = 8, RULE_state = 9, RULE_turing_function = 10,
+		RULE_transition_operator = 11;
 	public static final String[] ruleNames = {
 		"root_rule", "tape_statement", "accept_statement", "reject_statement",
-		"array", "state_statement", "state_array", "tape_move", "state", "turing_function",
-		"transition_operator"
+		"array", "state_statement", "state_array", "tape_move", "tape_value",
+		"state", "turing_function", "transition_operator"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
 		null, "'{'", "'|'", "'}'", "'('", "')'", "'->'", "'L'", "'R'", "'Tape'",
-		"'Accept'", "'Reject'", "'State'", "'='", "'['", "']'", "','", "'Turing'"
+		"'Accept'", "'Reject'", "'State'", "'='", "'['", "']'", "','", "'Turing'",
+		"'' ''", "'*'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, null, null, null, null, null, null, "L", "R", "TAPE", "ACCEPT",
 		"REJECT", "STATE", "ASSIGN", "OPEN_BRACKET", "CLOSE_BRACKET", "COMMA",
-		"TURING_FUNCTION", "STRING", "TapeValue", "Identifier", "COMMENT", "LINE_COMMENT",
-		"WS"
+		"TURING_FUNCTION", "EMPTY_VALUE", "ALL_STATES", "STRING", "TapeValue",
+		"Identifier", "COMMENT", "LINE_COMMENT", "WS"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -93,14 +92,23 @@ public class TuringParser extends Parser {
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 	public static class Root_ruleContext extends ParserRuleContext {
-		public Tape_statementContext tape_statement() {
-			return getRuleContext(Tape_statementContext.class,0);
+		public List<Tape_statementContext> tape_statement() {
+			return getRuleContexts(Tape_statementContext.class);
 		}
-		public Accept_statementContext accept_statement() {
-			return getRuleContext(Accept_statementContext.class,0);
+		public Tape_statementContext tape_statement(int i) {
+			return getRuleContext(Tape_statementContext.class,i);
 		}
-		public Reject_statementContext reject_statement() {
-			return getRuleContext(Reject_statementContext.class,0);
+		public List<Accept_statementContext> accept_statement() {
+			return getRuleContexts(Accept_statementContext.class);
+		}
+		public Accept_statementContext accept_statement(int i) {
+			return getRuleContext(Accept_statementContext.class,i);
+		}
+		public List<Reject_statementContext> reject_statement() {
+			return getRuleContexts(Reject_statementContext.class);
+		}
+		public Reject_statementContext reject_statement(int i) {
+			return getRuleContext(Reject_statementContext.class,i);
 		}
 		public List<State_statementContext> state_statement() {
 			return getRuleContexts(State_statementContext.class);
@@ -120,11 +128,11 @@ public class TuringParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_root_rule; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof TuringListener) ((TuringListener)listener).enterRoot_rule(this);
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).enterRoot_rule(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof TuringListener) ((TuringListener)listener).exitRoot_rule(this);
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).exitRoot_rule(this);
 		}
 	}
 
@@ -135,45 +143,73 @@ public class TuringParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(22);
-			tape_statement();
-			setState(23);
-			accept_statement();
 			setState(25);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if (_la==REJECT) {
+			do {
+				{
 				{
 				setState(24);
-				reject_statement();
+				tape_statement();
 				}
-			}
-
+				}
+				setState(27);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			} while ( _la==TAPE );
 			setState(30);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (_la==STATE) {
+			do {
 				{
 				{
-				setState(27);
-				state_statement();
+				setState(29);
+				accept_statement();
 				}
 				}
 				setState(32);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
+			} while ( _la==ACCEPT );
+			setState(37);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==REJECT) {
+				{
+				{
+				setState(34);
+				reject_statement();
+				}
+				}
+				setState(39);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
 			}
-			setState(36);
+			setState(43);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==STATE) {
+				{
+				{
+				setState(40);
+				state_statement();
+				}
+				}
+				setState(45);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			setState(49);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==TURING_FUNCTION) {
 				{
 				{
-				setState(33);
+				setState(46);
 				turing_function();
 				}
 				}
-				setState(38);
+				setState(51);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -201,11 +237,11 @@ public class TuringParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_tape_statement; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof TuringListener) ((TuringListener)listener).enterTape_statement(this);
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).enterTape_statement(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof TuringListener) ((TuringListener)listener).exitTape_statement(this);
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).exitTape_statement(this);
 		}
 	}
 
@@ -215,13 +251,13 @@ public class TuringParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(39);
+			setState(52);
 			match(TAPE);
-			setState(40);
+			setState(53);
 			match(Identifier);
-			setState(41);
+			setState(54);
 			match(ASSIGN);
-			setState(42);
+			setState(55);
 			match(STRING);
 			}
 		}
@@ -249,11 +285,11 @@ public class TuringParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_accept_statement; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof TuringListener) ((TuringListener)listener).enterAccept_statement(this);
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).enterAccept_statement(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof TuringListener) ((TuringListener)listener).exitAccept_statement(this);
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).exitAccept_statement(this);
 		}
 	}
 
@@ -263,13 +299,13 @@ public class TuringParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(44);
+			setState(57);
 			match(ACCEPT);
-			setState(45);
+			setState(58);
 			match(Identifier);
-			setState(46);
+			setState(59);
 			match(ASSIGN);
-			setState(47);
+			setState(60);
 			array();
 			}
 		}
@@ -297,11 +333,11 @@ public class TuringParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_reject_statement; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof TuringListener) ((TuringListener)listener).enterReject_statement(this);
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).enterReject_statement(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof TuringListener) ((TuringListener)listener).exitReject_statement(this);
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).exitReject_statement(this);
 		}
 	}
 
@@ -311,13 +347,13 @@ public class TuringParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(49);
+			setState(62);
 			match(REJECT);
-			setState(50);
+			setState(63);
 			match(Identifier);
-			setState(51);
+			setState(64);
 			match(ASSIGN);
-			setState(52);
+			setState(65);
 			array();
 			}
 		}
@@ -349,11 +385,11 @@ public class TuringParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_array; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof TuringListener) ((TuringListener)listener).enterArray(this);
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).enterArray(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof TuringListener) ((TuringListener)listener).exitArray(this);
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).exitArray(this);
 		}
 	}
 
@@ -364,29 +400,29 @@ public class TuringParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(54);
+			setState(67);
 			match(OPEN_BRACKET);
-			setState(55);
+			setState(68);
 			match(Identifier);
-			setState(60);
+			setState(73);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,3,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
 			while ( _alt!=1 && _alt!= ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1+1 ) {
 					{
 					{
-					setState(56);
+					setState(69);
 					match(COMMA);
-					setState(57);
+					setState(70);
 					match(Identifier);
 					}
 					}
 				}
-				setState(62);
+				setState(75);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,3,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
 			}
-			setState(63);
+			setState(76);
 			match(CLOSE_BRACKET);
 			}
 		}
@@ -414,11 +450,11 @@ public class TuringParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_state_statement; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof TuringListener) ((TuringListener)listener).enterState_statement(this);
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).enterState_statement(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof TuringListener) ((TuringListener)listener).exitState_statement(this);
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).exitState_statement(this);
 		}
 	}
 
@@ -428,13 +464,13 @@ public class TuringParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(65);
+			setState(78);
 			match(STATE);
-			setState(66);
+			setState(79);
 			match(Identifier);
-			setState(67);
+			setState(80);
 			match(ASSIGN);
-			setState(68);
+			setState(81);
 			state_array();
 			}
 		}
@@ -462,11 +498,11 @@ public class TuringParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_state_array; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof TuringListener) ((TuringListener)listener).enterState_array(this);
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).enterState_array(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof TuringListener) ((TuringListener)listener).exitState_array(this);
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).exitState_array(this);
 		}
 	}
 
@@ -475,30 +511,45 @@ public class TuringParser extends Parser {
 		enterRule(_localctx, 12, RULE_state_array);
 		int _la;
 		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(70);
-			match(T__0);
-			setState(71);
-			state();
-			setState(76);
+			setState(96);
 			_errHandler.sync(this);
-			_la = _input.LA(1);
-			while (_la==T__1) {
+			switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
+			case 1:
+				enterOuterAlt(_localctx, 1);
 				{
-				{
-				setState(72);
-				match(T__1);
-				setState(73);
+				setState(83);
+				match(T__0);
+				setState(84);
 				state();
-				}
-				}
-				setState(78);
+				setState(89);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			}
-			setState(79);
-			match(T__2);
+				while (_la==T__1) {
+					{
+					{
+					setState(85);
+					match(T__1);
+					setState(86);
+					state();
+					}
+					}
+					setState(91);
+					_errHandler.sync(this);
+					_la = _input.LA(1);
+				}
+				setState(92);
+				match(T__2);
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(94);
+				match(T__0);
+				setState(95);
+				match(T__2);
+				}
+				break;
 			}
 		}
 		catch (RecognitionException re) {
@@ -521,11 +572,11 @@ public class TuringParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_tape_move; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof TuringListener) ((TuringListener)listener).enterTape_move(this);
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).enterTape_move(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof TuringListener) ((TuringListener)listener).exitTape_move(this);
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).exitTape_move(this);
 		}
 	}
 
@@ -536,7 +587,7 @@ public class TuringParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(81);
+			setState(98);
 			_la = _input.LA(1);
 			if ( !(_la==L || _la==R) ) {
 			_errHandler.recoverInline(this);
@@ -559,10 +610,59 @@ public class TuringParser extends Parser {
 		return _localctx;
 	}
 
+	public static class Tape_valueContext extends ParserRuleContext {
+		public TerminalNode TapeValue() { return getToken(TuringParser.TapeValue, 0); }
+		public TerminalNode EMPTY_VALUE() { return getToken(TuringParser.EMPTY_VALUE, 0); }
+		public Tape_valueContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_tape_value; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).enterTape_value(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).exitTape_value(this);
+		}
+	}
+
+	public final Tape_valueContext tape_value() throws RecognitionException {
+		Tape_valueContext _localctx = new Tape_valueContext(_ctx, getState());
+		enterRule(_localctx, 16, RULE_tape_value);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(100);
+			_la = _input.LA(1);
+			if ( !(_la==EMPTY_VALUE || _la==TapeValue) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
 	public static class StateContext extends ParserRuleContext {
-		public List<TerminalNode> TapeValue() { return getTokens(TuringParser.TapeValue); }
-		public TerminalNode TapeValue(int i) {
-			return getToken(TuringParser.TapeValue, i);
+		public List<Tape_valueContext> tape_value() {
+			return getRuleContexts(Tape_valueContext.class);
+		}
+		public Tape_valueContext tape_value(int i) {
+			return getRuleContext(Tape_valueContext.class,i);
 		}
 		public Transition_operatorContext transition_operator() {
 			return getRuleContext(Transition_operatorContext.class,0);
@@ -581,33 +681,33 @@ public class TuringParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_state; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof TuringListener) ((TuringListener)listener).enterState(this);
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).enterState(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof TuringListener) ((TuringListener)listener).exitState(this);
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).exitState(this);
 		}
 	}
 
 	public final StateContext state() throws RecognitionException {
 		StateContext _localctx = new StateContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_state);
+		enterRule(_localctx, 18, RULE_state);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(83);
-			match(TapeValue);
-			setState(84);
+			setState(102);
+			tape_value();
+			setState(103);
 			transition_operator();
-			setState(85);
-			match(TapeValue);
-			setState(86);
+			setState(104);
+			tape_value();
+			setState(105);
 			match(COMMA);
-			setState(87);
+			setState(106);
 			tape_move();
-			setState(88);
+			setState(107);
 			match(COMMA);
-			setState(89);
+			setState(108);
 			match(Identifier);
 			}
 		}
@@ -635,54 +735,75 @@ public class TuringParser extends Parser {
 		public ArrayContext array() {
 			return getRuleContext(ArrayContext.class,0);
 		}
+		public TerminalNode ALL_STATES() { return getToken(TuringParser.ALL_STATES, 0); }
 		public Turing_functionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_turing_function; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof TuringListener) ((TuringListener)listener).enterTuring_function(this);
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).enterTuring_function(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof TuringListener) ((TuringListener)listener).exitTuring_function(this);
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).exitTuring_function(this);
 		}
 	}
 
 	public final Turing_functionContext turing_function() throws RecognitionException {
 		Turing_functionContext _localctx = new Turing_functionContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_turing_function);
+		enterRule(_localctx, 20, RULE_turing_function);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(91);
+			setState(110);
 			match(TURING_FUNCTION);
-			setState(92);
+			setState(111);
 			match(T__3);
-			setState(93);
+			setState(112);
 			match(Identifier);
-			setState(94);
+			setState(113);
 			match(COMMA);
-			setState(95);
+			setState(114);
 			match(Identifier);
-			setState(96);
+			setState(115);
 			match(COMMA);
-			setState(99);
+			setState(116);
+			match(Identifier);
+			setState(117);
+			match(COMMA);
+			setState(120);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==Identifier) {
 				{
-				setState(97);
+				setState(118);
 				match(Identifier);
-				setState(98);
+				setState(119);
 				match(COMMA);
 				}
 			}
 
-			setState(101);
-			array();
-			setState(102);
+			setState(124);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case OPEN_BRACKET:
+				{
+				setState(122);
+				array();
+				}
+				break;
+			case ALL_STATES:
+				{
+				setState(123);
+				match(ALL_STATES);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+			setState(126);
 			match(T__4);
 			}
 		}
@@ -704,21 +825,21 @@ public class TuringParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_transition_operator; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof TuringListener) ((TuringListener)listener).enterTransition_operator(this);
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).enterTransition_operator(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof TuringListener) ((TuringListener)listener).exitTransition_operator(this);
+			if ( listener instanceof TuringListener ) ((TuringListener)listener).exitTransition_operator(this);
 		}
 	}
 
 	public final Transition_operatorContext transition_operator() throws RecognitionException {
 		Transition_operatorContext _localctx = new Transition_operatorContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_transition_operator);
+		enterRule(_localctx, 22, RULE_transition_operator);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(104);
+			setState(128);
 			match(T__5);
 			}
 		}
@@ -734,31 +855,38 @@ public class TuringParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\31m\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4"+
-		"\f\t\f\3\2\3\2\3\2\5\2\34\n\2\3\2\7\2\37\n\2\f\2\16\2\"\13\2\3\2\7\2%"+
-		"\n\2\f\2\16\2(\13\2\3\3\3\3\3\3\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\5\3\5\3"+
-		"\5\3\5\3\5\3\6\3\6\3\6\3\6\7\6=\n\6\f\6\16\6@\13\6\3\6\3\6\3\7\3\7\3\7"+
-		"\3\7\3\7\3\b\3\b\3\b\3\b\7\bM\n\b\f\b\16\bP\13\b\3\b\3\b\3\t\3\t\3\n\3"+
-		"\n\3\n\3\n\3\n\3\n\3\n\3\n\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\5\13"+
-		"f\n\13\3\13\3\13\3\13\3\f\3\f\3\f\3>\2\r\2\4\6\b\n\f\16\20\22\24\26\2"+
-		"\3\3\2\t\n\2g\2\30\3\2\2\2\4)\3\2\2\2\6.\3\2\2\2\b\63\3\2\2\2\n8\3\2\2"+
-		"\2\fC\3\2\2\2\16H\3\2\2\2\20S\3\2\2\2\22U\3\2\2\2\24]\3\2\2\2\26j\3\2"+
-		"\2\2\30\31\5\4\3\2\31\33\5\6\4\2\32\34\5\b\5\2\33\32\3\2\2\2\33\34\3\2"+
-		"\2\2\34 \3\2\2\2\35\37\5\f\7\2\36\35\3\2\2\2\37\"\3\2\2\2 \36\3\2\2\2"+
-		" !\3\2\2\2!&\3\2\2\2\" \3\2\2\2#%\5\24\13\2$#\3\2\2\2%(\3\2\2\2&$\3\2"+
-		"\2\2&\'\3\2\2\2\'\3\3\2\2\2(&\3\2\2\2)*\7\13\2\2*+\7\26\2\2+,\7\17\2\2"+
-		",-\7\24\2\2-\5\3\2\2\2./\7\f\2\2/\60\7\26\2\2\60\61\7\17\2\2\61\62\5\n"+
-		"\6\2\62\7\3\2\2\2\63\64\7\r\2\2\64\65\7\26\2\2\65\66\7\17\2\2\66\67\5"+
-		"\n\6\2\67\t\3\2\2\289\7\20\2\29>\7\26\2\2:;\7\22\2\2;=\7\26\2\2<:\3\2"+
-		"\2\2=@\3\2\2\2>?\3\2\2\2><\3\2\2\2?A\3\2\2\2@>\3\2\2\2AB\7\21\2\2B\13"+
-		"\3\2\2\2CD\7\16\2\2DE\7\26\2\2EF\7\17\2\2FG\5\16\b\2G\r\3\2\2\2HI\7\3"+
-		"\2\2IN\5\22\n\2JK\7\4\2\2KM\5\22\n\2LJ\3\2\2\2MP\3\2\2\2NL\3\2\2\2NO\3"+
-		"\2\2\2OQ\3\2\2\2PN\3\2\2\2QR\7\5\2\2R\17\3\2\2\2ST\t\2\2\2T\21\3\2\2\2"+
-		"UV\7\25\2\2VW\5\26\f\2WX\7\25\2\2XY\7\22\2\2YZ\5\20\t\2Z[\7\22\2\2[\\"+
-		"\7\26\2\2\\\23\3\2\2\2]^\7\23\2\2^_\7\6\2\2_`\7\26\2\2`a\7\22\2\2ab\7"+
-		"\26\2\2be\7\22\2\2cd\7\26\2\2df\7\22\2\2ec\3\2\2\2ef\3\2\2\2fg\3\2\2\2"+
-		"gh\5\n\6\2hi\7\7\2\2i\25\3\2\2\2jk\7\b\2\2k\27\3\2\2\2\b\33 &>Ne";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\33\u0085\4\2\t\2"+
+		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
+		"\t\13\4\f\t\f\4\r\t\r\3\2\6\2\34\n\2\r\2\16\2\35\3\2\6\2!\n\2\r\2\16\2"+
+		"\"\3\2\7\2&\n\2\f\2\16\2)\13\2\3\2\7\2,\n\2\f\2\16\2/\13\2\3\2\7\2\62"+
+		"\n\2\f\2\16\2\65\13\2\3\3\3\3\3\3\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\5\3\5"+
+		"\3\5\3\5\3\5\3\6\3\6\3\6\3\6\7\6J\n\6\f\6\16\6M\13\6\3\6\3\6\3\7\3\7\3"+
+		"\7\3\7\3\7\3\b\3\b\3\b\3\b\7\bZ\n\b\f\b\16\b]\13\b\3\b\3\b\3\b\3\b\5\b"+
+		"c\n\b\3\t\3\t\3\n\3\n\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\f\3\f"+
+		"\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\5\f{\n\f\3\f\3\f\5\f\177\n\f\3\f\3\f"+
+		"\3\r\3\r\3\r\3K\2\16\2\4\6\b\n\f\16\20\22\24\26\30\2\4\3\2\t\n\4\2\24"+
+		"\24\27\27\2\u0082\2\33\3\2\2\2\4\66\3\2\2\2\6;\3\2\2\2\b@\3\2\2\2\nE\3"+
+		"\2\2\2\fP\3\2\2\2\16b\3\2\2\2\20d\3\2\2\2\22f\3\2\2\2\24h\3\2\2\2\26p"+
+		"\3\2\2\2\30\u0082\3\2\2\2\32\34\5\4\3\2\33\32\3\2\2\2\34\35\3\2\2\2\35"+
+		"\33\3\2\2\2\35\36\3\2\2\2\36 \3\2\2\2\37!\5\6\4\2 \37\3\2\2\2!\"\3\2\2"+
+		"\2\" \3\2\2\2\"#\3\2\2\2#\'\3\2\2\2$&\5\b\5\2%$\3\2\2\2&)\3\2\2\2\'%\3"+
+		"\2\2\2\'(\3\2\2\2(-\3\2\2\2)\'\3\2\2\2*,\5\f\7\2+*\3\2\2\2,/\3\2\2\2-"+
+		"+\3\2\2\2-.\3\2\2\2.\63\3\2\2\2/-\3\2\2\2\60\62\5\26\f\2\61\60\3\2\2\2"+
+		"\62\65\3\2\2\2\63\61\3\2\2\2\63\64\3\2\2\2\64\3\3\2\2\2\65\63\3\2\2\2"+
+		"\66\67\7\13\2\2\678\7\30\2\289\7\17\2\29:\7\26\2\2:\5\3\2\2\2;<\7\f\2"+
+		"\2<=\7\30\2\2=>\7\17\2\2>?\5\n\6\2?\7\3\2\2\2@A\7\r\2\2AB\7\30\2\2BC\7"+
+		"\17\2\2CD\5\n\6\2D\t\3\2\2\2EF\7\20\2\2FK\7\30\2\2GH\7\22\2\2HJ\7\30\2"+
+		"\2IG\3\2\2\2JM\3\2\2\2KL\3\2\2\2KI\3\2\2\2LN\3\2\2\2MK\3\2\2\2NO\7\21"+
+		"\2\2O\13\3\2\2\2PQ\7\16\2\2QR\7\30\2\2RS\7\17\2\2ST\5\16\b\2T\r\3\2\2"+
+		"\2UV\7\3\2\2V[\5\24\13\2WX\7\4\2\2XZ\5\24\13\2YW\3\2\2\2Z]\3\2\2\2[Y\3"+
+		"\2\2\2[\\\3\2\2\2\\^\3\2\2\2][\3\2\2\2^_\7\5\2\2_c\3\2\2\2`a\7\3\2\2a"+
+		"c\7\5\2\2bU\3\2\2\2b`\3\2\2\2c\17\3\2\2\2de\t\2\2\2e\21\3\2\2\2fg\t\3"+
+		"\2\2g\23\3\2\2\2hi\5\22\n\2ij\5\30\r\2jk\5\22\n\2kl\7\22\2\2lm\5\20\t"+
+		"\2mn\7\22\2\2no\7\30\2\2o\25\3\2\2\2pq\7\23\2\2qr\7\6\2\2rs\7\30\2\2s"+
+		"t\7\22\2\2tu\7\30\2\2uv\7\22\2\2vw\7\30\2\2wz\7\22\2\2xy\7\30\2\2y{\7"+
+		"\22\2\2zx\3\2\2\2z{\3\2\2\2{~\3\2\2\2|\177\5\n\6\2}\177\7\25\2\2~|\3\2"+
+		"\2\2~}\3\2\2\2\177\u0080\3\2\2\2\u0080\u0081\7\7\2\2\u0081\27\3\2\2\2"+
+		"\u0082\u0083\7\b\2\2\u0083\31\3\2\2\2\f\35\"\'-\63K[bz~";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

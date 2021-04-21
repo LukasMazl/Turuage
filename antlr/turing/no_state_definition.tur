@@ -8,8 +8,8 @@ State q0 = {
 }
 
 State q1 = {
-	'0' -> '0', L, q0|
+	'0' -> '0', L, q5|
 	'1' -> '1', R, q1
 }
 
-Turing(accept, reject, input, [q0, q1]) //Vraci true nebo false
+Turing(accept, input, q0, reject, [q0, q6]) //Vraci true nebo false
