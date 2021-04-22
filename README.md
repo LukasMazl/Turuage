@@ -15,6 +15,7 @@ Turing(accept, reject, vstup, program) - Vrací boolean jestli je slovo přijato
 - -> 	- prechod
 - = 	- prirazeni
 - //  	- komentar
+- /*    - blokový komentář
 
 ## Příklad jazyka
 
