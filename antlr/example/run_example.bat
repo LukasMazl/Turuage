@@ -1,0 +1,1 @@
+java -jar turing-prk-1.0-jar-with-dependencies.jar -file=./palindrom.tur -stepable

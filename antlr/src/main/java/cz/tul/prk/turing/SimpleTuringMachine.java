@@ -1,14 +1,16 @@
 package cz.tul.prk.turing;
 
+import cz.tul.prk.ProgramConfiguration;
 import cz.tul.prk.context.ProgramContext;
 import cz.tul.prk.context.StateContext;
 import cz.tul.prk.context.TuringContext;
 import cz.tul.prk.context.TuringMove;
 import lombok.extern.log4j.Log4j;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
+
+import static cz.tul.prk.TuringNicePrinter.TAPE_SIZE;
+import static cz.tul.prk.TuringNicePrinter.logNextStep;
 
 @Log4j
 public class SimpleTuringMachine implements TuringMachine {
@@ -17,11 +19,12 @@ public class SimpleTuringMachine implements TuringMachine {
 
     private Deque<Character> leftSide = new ArrayDeque<>();
     private Deque<Character> rightSide = new ArrayDeque<>();
+    private Scanner scanner = new Scanner(System.in);
 
     @Override
-    public void run(ProgramContext programContext) {
+    public void run(ProgramContext programContext, ProgramConfiguration programConfiguration) {
         for(TuringContext turingContext : programContext.getTuringContextList()) {
-            String lastState = runTuring(turingContext, programContext);
+            String lastState = runTuring(turingContext, programContext, programConfiguration);
             if (programContext.getAcceptStates().get(turingContext.getAcceptIdent()).contains(lastState)) {
                 System.out.println("True");
             } else if(programContext.getRejectStates().get(turingContext.getRejectIdent()).contains(lastState)) {
@@ -33,7 +36,7 @@ public class SimpleTuringMachine implements TuringMachine {
         }
     }
 
-    private String runTuring(TuringContext turingContext, ProgramContext programContext) {
+    private String runTuring(TuringContext turingContext, ProgramContext programContext, ProgramConfiguration programConfiguration) {
         String currentState = turingContext.getStartState();
         List<StateContext> stateContextList = programContext.getStateContext().get(currentState);
         String tapeInput = programContext.getTapeContext().get(turingContext.getInputIdent()).getValue();
@@ -41,9 +44,14 @@ public class SimpleTuringMachine implements TuringMachine {
         initTape(tapeInput);
         StateContext nextMove;
         while((nextMove = prepareNextMove(stateContextList, readingPointerValue)) != null) {
+            if(!programConfiguration.isSilenceMode()) {
+                printCurrentState(currentState, nextMove, readingPointerValue, stateContextList);
+                if(programConfiguration.isStepable()) {
+                    scanner.nextLine();
+                }
+            }
             readingPointerValue = makeMove(nextMove.getTuringMove(), nextMove.getWriteValue());
             currentState = nextMove.getNextState();
-
             if (turingContext.getStatesIdent().contains(currentState)) {
                 stateContextList = programContext.getStateContext().get(currentState);
             } else {
@@ -51,6 +59,35 @@ public class SimpleTuringMachine implements TuringMachine {
             }
         }
         return currentState;
+    }
+
+    private void printCurrentState(String currentState, StateContext nextMove, Character readingPointerValue, List<StateContext> stateContextList) {
+        String ruleDescription = String.format("'%s' -> '%s', %s, %s", nextMove.getIdentificator(), nextMove.getWriteValue(), nextMove.getTuringMove(), nextMove.getNextState());
+        List<Character> tape = new ArrayList<>();
+        int size = Math.round(TAPE_SIZE / 2);
+        for (Character character : leftSide) {
+            tape.add(character);
+            if(tape.size() >= size)
+                break;
+        }
+
+        while (tape.size() < size) {
+            tape.add(EMPTY_CHARACTER);
+        }
+
+        Collections.reverse(tape);
+        tape.add(readingPointerValue);
+        for (Character character : rightSide) {
+            tape.add(character);
+            if(tape.size() >= (size * 2 +1))
+                break;
+        }
+
+        while (tape.size() < (size * 2 +1)) {
+            tape.add(EMPTY_CHARACTER);
+        }
+
+        logNextStep(currentState, ruleDescription, tape);
     }
 
     private StateContext prepareNextMove(List<StateContext> stateContextList, Character readingPointerValue) {
