@@ -19,19 +19,53 @@ Turing(accept, reject, vstup, program) - Vrací boolean jestli je slovo přijato
 ## Příklad jazyka
 
 ```
-Paska vstup = “10101011”;
-Accept accept = [q0, q3];
-Reject reject = [q1, q2];
+Tape tape = "aaaaaaabbaaaaaaa"
+Tape tape2 = "aaaaaaabbbbaaaaaaa"
 
-Stav q0 = {
-	‘a’ -> ‘a’, L, q0
-	‘b’ -> ‘b’, R, q1
+Accept acc = [accepted]
+Accept acc1 = [rejectState, accepted]
+
+Reject reject = [rejectState]
+
+State start = {
+    'a' -> ' ', R, matchA|
+    'b' -> ' ', R, matchB|
+    ' ' -> ' ', R, accepted
 }
 
-Stav q1 = {
-	‘a’ -> ‘a’, L, q0
-	‘b’ -> ‘b’, R, q1
+State matchA = {
+    'a' -> 'a', R, matchA|
+    'b' -> 'b', R, matchA|
+    ' ' -> ' ', L, findA
 }
 
-Turing(accept, reject, vstup, [q0, q1]); //Vraci true nebo false
+State findA = {
+    'a' -> ' ', L, goBack|
+    'b' -> ' ', L, rejectState
+}
+
+State matchB = {
+    'a' -> 'a', R, matchB|
+    'b' -> 'b', R, matchB|
+    ' ' -> ' ', L, findB
+}
+
+State findB = {
+    'a' -> ' ', L, rejectState|
+    'b' -> ' ', L, goBack
+}
+
+State goBack = {
+    'a' -> 'a', L, goBack|
+    'b' -> 'b', L, goBack|
+    ' ' -> ' ', R, start
+}
+
+
+State rejectState = {}
+State accepted = {}
+
+Turing(acc, reject, tape, start, *)
+Turing(acc, reject, tape2, start, [start, matchA])
+Turing(acc1, reject, tape2, start, *)
 ```
